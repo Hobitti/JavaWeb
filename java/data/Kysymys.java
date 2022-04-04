@@ -4,13 +4,15 @@ public class Kysymys {
 	
 	private int id;
 	private String kysymys;
+	private String selite;
 	private String axis;
 	
-	public Kysymys(int id, String kysymys, String axis) {
+	public Kysymys(int id, String kysymys, String selite/*, String axis*/) {
 		super();
 		this.id = id;
 		this.kysymys = kysymys;
-		this.axis = axis;
+		this.selite = selite;
+		/*this.axis = axis;*/
 	}
 	
 	public Kysymys() {
@@ -31,6 +33,14 @@ public class Kysymys {
 	
 	public void setKysymys(String kysymys) {
 		this.kysymys = kysymys;
+	}
+	
+	public String getSelite() {
+		return selite;
+	}
+	
+	public void setSelite(String selite) {
+		this.selite = selite;
 	}
 	
 	public String getAxis() {

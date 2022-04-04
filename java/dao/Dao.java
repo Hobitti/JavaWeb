@@ -120,13 +120,13 @@ public class Dao {
 		public ArrayList<Kysymys> readAllKysymykset() {
 			ArrayList<Kysymys> list=new ArrayList<>();
 			try {
-				Statement stmt=conn.createStatement();
-				ResultSet RS=stmt.executeQuery("select * from kysymys");
+				Statement stmt = conn.createStatement();
+				ResultSet RS = stmt.executeQuery("select * from kysymykset");
 				while (RS.next()){
 					Kysymys next = new Kysymys();
-					next.setId(RS.getInt("KysymysID"));
-					next.setKysymys(RS.getString("Kysymys"));
-					next.setAxis(RS.getString("KysymysAkseli"));
+					next.setId(RS.getInt("kysymysID"));
+					next.setKysymys(RS.getString("kysymys"));
+					next.setSelite(RS.getString("selite"));
 					list.add(next);
 				}
 				return list;
@@ -140,14 +140,14 @@ public class Dao {
 		public Kysymys readKysymys(String id) {
 			Kysymys kysymykset = null;
 			try {
-				String sql="select * from Kysymys where KysymysID=?";
+				String sql="select * from kysymykset where kysymysID = ?";
 				PreparedStatement pstmt=conn.prepareStatement(sql);
 				pstmt.setString(1, id);
 				ResultSet RS=pstmt.executeQuery();
 				while (RS.next()){
-					kysymykset.setId(RS.getInt("KysymysID"));
-					kysymykset.setKysymys(RS.getString("Kysymys"));
-					kysymykset.setAxis(RS.getString("KysymysAkseli"));
+					kysymykset.setId(RS.getInt("kysymysID"));
+					kysymykset.setKysymys(RS.getString("kysymys"));
+					kysymykset.setSelite(RS.getString("selite"));
 				}
 				return kysymykset;
 			}
