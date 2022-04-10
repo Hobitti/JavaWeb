@@ -12,9 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import dao.Dao;
 import data.Kysymys;
 
-/**
- * Servlet implementation class ShowFish
- */
 @WebServlet("/kysymykset")
 public class ReadKysymys extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -36,6 +33,8 @@ public class ReadKysymys extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
+	
+	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ArrayList<Kysymys> list = null;
 		
