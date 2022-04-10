@@ -43,6 +43,7 @@ public class Dao {
 			return false;
 		}
 	}
+	
 	//Ehdokas tablen toiminnot alkavat tästä
 	public ArrayList<Ehdokas> readAllEhdokas() {
 		ArrayList<Ehdokas> list=new ArrayList<>();
@@ -181,6 +182,33 @@ public class Dao {
 				return readAllKysymykset();
 			}
 			catch(SQLException e) {
+				return null;
+			}
+		}
+		
+		// Vastaukset
+		public ArrayList<Vastaus> readEhdokasVastaukset(String ehdokasID) {
+			
+			ArrayList<Vastaus> list = new ArrayList<>();
+			
+			try {
+				String sql = "FROM * FROM vastaus WHERE ehdokasID = ?";
+				PreparedStatement pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, ehdokasID);
+				ResultSet RS = pstmt.executeQuery(sql);
+				while (RS.next()){
+					Vastaus next = new Vastaus();
+					next.setVastausID(RS.getInt("vastausID"));
+					next.setKysymysID(RS.getInt("kysymysID"));
+					next.setEhdokasID(RS.getInt("ehdokasID"));
+					next.setMielipide(RS.getInt("mielipide"));
+					next.setPerustelu(RS.getString("perustelu"));
+					list.add(next);
+				}
+				
+				return list;
+				
+			} catch(SQLException e) {
 				return null;
 			}
 		}
