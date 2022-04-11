@@ -7,7 +7,9 @@ public class Kysymys {
 	private String selite;
 	private String axis;
 	
+
 	public Kysymys(int id, String kysymys, String selite, String axis) {
+
 		super();
 		this.id = id;
 		this.kysymys = kysymys;

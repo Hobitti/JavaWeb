@@ -7,8 +7,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.Map;
+
 import java.sql.Connection;
 
 import data.*;
@@ -44,8 +46,8 @@ public class Dao {
 			return false;
 		}
 	}
-	
-	//Ehdokas tablen toiminnot alkavat t‰st‰
+
+	//Ehdokas tablen toiminnot alkavat t√§st√§
 	public ArrayList<Ehdokas> readAllEhdokas() {
 		ArrayList<Ehdokas> list=new ArrayList<>();
 		try {
@@ -119,7 +121,7 @@ public class Dao {
 			}
 		}
 		
-		//Kysymykset Tablen toiminnota alkavat t‰st‰
+		//Kysymykset Tablen toiminnota alkavat t√§st√§
 		public ArrayList<Kysymys> readAllKysymykset() {
 			ArrayList<Kysymys> list=new ArrayList<>();
 			try {
@@ -188,6 +190,7 @@ public class Dao {
 			}
 		}
 		
+
 		// Vastaukset
 		public ArrayList<Vastaukset> readAllVastaukset() {
 			ArrayList<Vastaukset> list=new ArrayList<>();
@@ -232,7 +235,7 @@ public class Dao {
 				return null;
 			}
 		}
-		
+
 		public ArrayList<Vastaukset> deleteVastaus(String id) {
 			try {
 				String sql="delete from vastaukset where VastausID=?";
@@ -245,7 +248,7 @@ public class Dao {
 				return null;
 			}
 		}
-		
+
 		public Vastaukset readVastaus(String id) {
 			Vastaukset vastaus = new Vastaukset();
 			try {
@@ -267,7 +270,7 @@ public class Dao {
 				return null;
 			}
 		}
-		
+
 		public Vastaukset updateVastaus(Vastaukset v) {
 			try {
 				String sql="update vastaukset set Vastasi=?, Perustelu=? where VastausID=?";
@@ -286,6 +289,7 @@ public class Dao {
 			}
 		
 		}
+
 		
 		public Map<Integer, Float> readAllEhdokasVastausAverage() {
 			Map<Integer, Float> ehdokkaidenVastauksienAvg = new HashMap<Integer, Float>();
@@ -320,3 +324,4 @@ public class Dao {
 		}
 		
 	}
+

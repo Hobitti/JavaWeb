@@ -1,4 +1,7 @@
 package app;
+
+
+import java.io.IOException;
 import data.Ehdokas;
 import data.Kysymys;
 import data.Vastaukset;
@@ -11,6 +14,7 @@ import java.util.Enumeration;
 import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,12 +27,14 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/SaveAnswer")
 public class SaveAnswer extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+
 	private Dao dao = null;
 	
 	@Override
 	public void init() {
 		dao = new Dao("jdbc:mysql://localhost:3306/javaweb", "root", "root");
 	}
+
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -42,6 +48,7 @@ public class SaveAnswer extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
     @Override
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
         int total = 0;
@@ -51,7 +58,7 @@ public class SaveAnswer extends HttpServlet {
         Map<Integer, Float> topEhdokkaatAvg = null;
         ArrayList<Ehdokas> topEhdokkaat = new ArrayList<Ehdokas>();
         
-        // k‰yd‰‰n k‰ytt‰j‰n vastaukset l‰pi
+        // k√§yd√§√§n k√§ytt√§j√§n vastaukset l√§pi
         Enumeration<String> parameterNames = request.getParameterNames();
         
         while (parameterNames.hasMoreElements()) {
@@ -102,6 +109,7 @@ public class SaveAnswer extends HttpServlet {
 		RequestDispatcher rd = request.getRequestDispatcher("/jsp/parhaat_ehdokkaat.jsp");
 		rd.forward(request, response);
         
+
     }
 
 }
