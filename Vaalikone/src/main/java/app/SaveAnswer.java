@@ -1,5 +1,6 @@
 package app;
 import data.Kysymys;
+import data.Vastaukset;
 import dao.Dao;
 
 import java.io.IOException;
@@ -20,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 public class SaveAnswer extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private Dao dao = null;
-
+	
 	@Override
 	public void init() {
 		dao = new Dao("jdbc:mysql://localhost:3306/javaweb", "root", "root");
@@ -42,10 +43,28 @@ public class SaveAnswer extends HttpServlet {
         response.setContentType("text/html");
         response.setCharacterEncoding("UTF-8");
         
-        float total = 0;
+        int total = 0;
         float average = 0;
         int count = 0;
+        int akseliCountX = 0;
+        int akseliCountY = 0;
         
+        int vastaajaX = 0;
+        int vastaajaY = 0;
+        
+        ArrayList<Vastaukset> ehdokasVastaukset = null;
+        
+        if (dao.getConnection()) {
+        	akseliCountX = dao.countKysymysAkseliX();
+        	akseliCountY = dao.countKysymysAkseliY();
+        	ehdokasVastaukset = dao.readAllVastaukset();
+			System.out.println("Connection OK!");
+		} else {
+			System.out.println("No connection to database");
+		}
+        
+        
+        // k‰yd‰‰n k‰ytt‰j‰n vastaukset l‰pi
         Enumeration<String> parameterNames = request.getParameterNames();
         
         while (parameterNames.hasMoreElements()) {
@@ -59,24 +78,37 @@ public class SaveAnswer extends HttpServlet {
             for (int i = 0; i < paramValues.length; i++) {
             	
                 String paramValue = paramValues[i];
+                if(Integer.parseInt(paramValue) == 0) {
+                	count--;
+                } 
+                
                 if(paramValue != null) {
-                	if(Integer.parseInt(paramValue) == 3) {
-                		count--;
-                	} else {
-                		total += Integer.parseInt(paramValue);
-                        response.getWriter().print(" " + paramValue);
-                        response.getWriter().print("<br>");
-                	}
+                	total += Integer.parseInt(paramValue);
+                    response.getWriter().print(" " + paramValue);
+                    response.getWriter().print("<br>");
                 }
-            }
+            }  
         }
         
-        average = total / count;
+        average = total / (float)count;
+        
+        for(int i = 0; i < ehdokasVastaukset.size(); i++) {
+        	response.getWriter().print("<br>");
+            response.getWriter().print("ehdokas: " + ehdokasVastaukset.get(i).getVastasi());
+        }
+        
+        
         
         response.getWriter().print("<br>");
         response.getWriter().print("Total: " + total);
         response.getWriter().print("<br>");
         response.getWriter().print("Average: " + average);
+        response.getWriter().print("<br>");
+        response.getWriter().print("X: " + akseliCountX);
+        response.getWriter().print("<br>");
+        response.getWriter().print("Y: " + akseliCountY);
+        response.getWriter().print("<br>");
+        response.getWriter().print("ehdokas: " + ehdokasVastaukset.get(0).getVastasi());
     }
 
 }
