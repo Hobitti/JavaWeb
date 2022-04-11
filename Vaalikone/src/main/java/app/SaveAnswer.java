@@ -1,4 +1,6 @@
 package app;
+import data.Ehdokas;
+import data.Kysymys;
 import data.Vastaukset;
 import dao.Dao;
 
@@ -8,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Map;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -40,14 +43,13 @@ public class SaveAnswer extends HttpServlet {
 	 */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html");
-        response.setCharacterEncoding("UTF-8");
         
         int total = 0;
         float average = 0;
         int count = 0;
         
-        Map<Integer, Float> bestEhdokkaat = null;
+        Map<Integer, Float> topEhdokkaatAvg = null;
+        ArrayList<Ehdokas> topEhdokkaat = new ArrayList<Ehdokas>();
         
         // k‰yd‰‰n k‰ytt‰j‰n vastaukset l‰pi
         Enumeration<String> parameterNames = request.getParameterNames();
@@ -55,8 +57,6 @@ public class SaveAnswer extends HttpServlet {
         while (parameterNames.hasMoreElements()) {
  
             String paramName = parameterNames.nextElement();
-            response.getWriter().print(paramName);
-            response.getWriter().print("<br>");
             count++;
  
             String[] paramValues = request.getParameterValues(paramName);
@@ -69,43 +69,39 @@ public class SaveAnswer extends HttpServlet {
                 
                 if(paramValue != null) {
                 	total += Integer.parseInt(paramValue);
-                    response.getWriter().print(" " + paramValue);
-                    response.getWriter().print("<br>");
                 }
             }  
         }
         
         average = total / (float)count;
         
-        response.getWriter().print("Count: " + count);
-        response.getWriter().print("<br>");
-        response.getWriter().print("<br>");
-        response.getWriter().print("Total: " + total);
-        response.getWriter().print("<br>");
-        response.getWriter().print("Average: " + average);
+//        Debugging messages
+        
+//        response.getWriter().print("Count: " + count);
+//        response.getWriter().print("<br>");
+//        response.getWriter().print("<br>");
+//        response.getWriter().print("Total: " + total);
+//        response.getWriter().print("<br>");
+//        response.getWriter().print("Average: " + average);
         
         if (dao.getConnection()) {
-        	bestEhdokkaat = dao.readBestEhdokkaat(average);
+        	topEhdokkaatAvg = dao.readBestEhdokkaat(average);
 			System.out.println("Connection OK!");
 		} else {
 			System.out.println("No connection to database");
 		}
         
-        
-        
-        if(bestEhdokkaat != null) {
-        	for (Map.Entry<Integer, Float> me : bestEhdokkaat.entrySet()) {
-
-            	// Printing keys
-            	response.getWriter().print("<br>Top 3 ehdokkaat");
-            	response.getWriter().print("EhdokasId: " + me.getKey());
-            	response.getWriter().print("<br>Avg: " + me.getValue());
+        if(topEhdokkaatAvg != null) {
+        	for (Map.Entry<Integer, Float> me : topEhdokkaatAvg.entrySet()) {
+        		topEhdokkaat.add(dao.readEhdokas(Integer.toString(me.getKey())));
            }
-        } else {
-        	response.getWriter().print("<br>Ehdokkaita ei voida suositella.");
         }
         
+        request.setAttribute("top_ehdokkaat", topEhdokkaat);
 
+		RequestDispatcher rd = request.getRequestDispatcher("/jsp/parhaat_ehdokkaat.jsp");
+		rd.forward(request, response);
+        
     }
 
 }
