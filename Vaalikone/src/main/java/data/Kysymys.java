@@ -7,12 +7,12 @@ public class Kysymys {
 	private String selite;
 	private String axis;
 	
-	public Kysymys(int id, String kysymys, String selite/*, String axis*/) {
+	public Kysymys(int id, String kysymys, String selite, String axis) {
 		super();
 		this.id = id;
 		this.kysymys = kysymys;
 		this.selite = selite;
-		/*this.axis = axis;*/
+		this.axis = axis;
 	}
 	
 	public Kysymys() {
