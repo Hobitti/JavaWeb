@@ -12,6 +12,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style><%@include file="/WEB-INF/css/style.css"%></style>
     <title>Vaalikone</title>
     
     <!--
@@ -33,34 +34,42 @@
 	<p>Jos et ole varma mitä kysymyksellä tarkoitetaan, paina info-painiketta (i) kysymyksen vieressä, jolloin kysymykseen tulee lisäselite.</p>
 </header>
 
-<section class="questions">
+<section class="">
 <%
 ArrayList<Kysymys> qList = (ArrayList<Kysymys>)request.getAttribute("kysymys_list");
 
 for (int i = 0; qList != null && i < qList.size(); i++) {
 	Kysymys q = qList.get(i);
-	out.println("<form method='POST' action='/SaveAnswer'>");
-	out.println("<div class='question_card'>");
-		out.println("<h2>" + q.getKysymys() + " <span>i</span></h2>");
-		if(q.getSelite() != null) {
-			out.println("<p>" + q.getSelite() + "</p>");
-		}
-		
-			out.println("<input type='radio' id='q" + q.getId() + "_op1' name='q" + q.getId() + "_answer' value='-2'>");
-		    out.println("<label for='q" + q.getId() + "_op1'>Täysin eri mieltä</label>");
+	out.println("<form class='questions flex-column' method='POST' action='/SaveAnswer'>");
+	out.println("<div class='question-card'>");
+		out.println("<h2>" + q.getKysymys() + "</h2>");
+			out.println("<ul class='flex-row'>");
+				out.println("<li>");
+					out.println("<input type='radio' id='q" + q.getId() + "_op1' name='q" + q.getId() + "_answer' value='-2'>");
+				    out.println("<label for='q" + q.getId() + "_op1'>Täysin eri mieltä</label>");
+				out.println("</li>");
+				    		
+				out.println("<li>");
+			    out.println("<input type='radio' id='q" + q.getId() + "_op2' name='q" + q.getId() + "_answer' value='-1'>");
+			    out.println("<label for='q" + q.getId() + "_op2'>Jokseenkin eri mieltä</label>");
+			    out.println("</li>");
+			    		
+			    out.println("<li>");
+				    out.println("<input type='radio' id='q" + q.getId() + "_op3' name='q" + q.getId() + "_answer' value='0'>");
+				    out.println("<label for='q" + q.getId() + "_op3'>En osaa sanoa</label>");
+			    out.println("</li>");
+			    		
+			    out.println("<li>");
+				    out.println("<input type='radio' id='q" + q.getId() + "_op4' name='q" + q.getId() + "_answer' value='+1'>");
+				    out.println("<label for='q" + q.getId() + "_op4'>Jokseenkin samaa mieltä</label>");
+			    out.println("</li>");
+			    		
+			    out.println("<li>");
+				    out.println("<input type='radio' id='q" + q.getId() + "_op5' name='q" + q.getId() + "_answer' value='+2'>");
+				    out.println("<label for='q" + q.getId() + "_op5'>Täysin samaa mieltä</label>");
+			    out.println("</li>");
+		    out.println("</ul>");
 		    		
-		    out.println("<input type='radio' id='q" + q.getId() + "_op2' name='q" + q.getId() + "_answer' value='-1'>");
-		    out.println("<label for='q" + q.getId() + "_op2'>Jokseenkin eri mieltä</label>");
-		    		
-		    out.println("<input type='radio' id='q" + q.getId() + "_op3' name='q" + q.getId() + "_answer' value='0'>");
-		    out.println("<label for='q" + q.getId() + "_op3'>En osaa sanoa</label>");
-		    		
-		    out.println("<input type='radio' id='q" + q.getId() + "_op4' name='q" + q.getId() + "_answer' value='+1'>");
-		    out.println("<label for='q" + q.getId() + "_op4'>Jokseenkin samaa mieltä</label>");
-		    		
-		    out.println("<input type='radio' id='q" + q.getId() + "_op5' name='q" + q.getId() + "_answer' value='+2'>");
-		    out.println("<label for='q" + q.getId() + "_op5'>Täysin samaa mieltä</label>");
-		
 	out.println("</div>");
 	if(i == qList.size() - 1) {
 		out.println("<input type='submit' value='Näytä tulokset!'>");
