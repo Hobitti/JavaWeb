@@ -14,8 +14,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style><%@include file="/WEB-INF/css/style.css"%></style>
     <title>Vaalikone</title>
-    
     <!--
+
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script>
 		$(document).on("click", "#q1_op1", function() { // When HTML DOM "click" event is invoked on element with ID "somebutton", execute the following function...
@@ -25,6 +25,7 @@
 		});
 	</script>
 	-->
+
 </head>
 <body>
 <header class="welcome">
@@ -33,13 +34,14 @@
 	<p>Kysymyksiin vastataan asteikolla 1 - 5, jotka vastaatat mielipidettä täysin eri mieltä - täysin samaa mieltä. Jos vastauksestaan ei ole varma voi kysymykseen vastata neutraalilla mielipiteellä.</p>
 	<p>Jos et ole varma mitä kysymyksellä tarkoitetaan, paina info-painiketta (i) kysymyksen vieressä, jolloin kysymykseen tulee lisäselite.</p>
 </header>
-
 <section class="">
+
 <%
 ArrayList<Kysymys> qList = (ArrayList<Kysymys>)request.getAttribute("kysymys_list");
 
 for (int i = 0; qList != null && i < qList.size(); i++) {
 	Kysymys q = qList.get(i);
+
 	out.println("<form class='questions flex-column' method='POST' action='/SaveAnswer'>");
 	out.println("<div class='question-card'>");
 		out.println("<h2>" + q.getKysymys() + "</h2>");
@@ -74,8 +76,7 @@ for (int i = 0; qList != null && i < qList.size(); i++) {
 	if(i == qList.size() - 1) {
 		out.println("<input type='submit' value='Näytä tulokset!'>");
 		out.println("</form>");
-	}
-	
+	}	
 }
 %>
 

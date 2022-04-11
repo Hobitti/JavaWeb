@@ -7,6 +7,7 @@ public class Vastaukset {
 	private int vastasi;
 	private String perustelu;
 	private float average;
+
 	
 	public Vastaukset() {
 		//todo
@@ -15,6 +16,7 @@ public class Vastaukset {
 	public int getId() {
 		return id;
 	}
+
 	
 	public void setId(int id) {
 		this.id = id;
