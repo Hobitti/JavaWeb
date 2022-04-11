@@ -13,10 +13,12 @@ import javax.servlet.http.HttpServletResponse;
 import dao.Dao;
 import data.Vastaukset;
 
+
 @WebServlet("/vastaukset")
 public class BrowseVastaukset extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private Dao dao = null;
+
 	
 	@Override
 	public void init() {
@@ -31,7 +33,7 @@ public class BrowseVastaukset extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ArrayList<Vastaukset> list = null;
-		
+	
 		if (dao.getConnection()) {
 			list = dao.readEhdokasVastaukset("1");
 			System.out.println("Connection OK!");
@@ -41,6 +43,9 @@ public class BrowseVastaukset extends HttpServlet {
 		}
 		
 		request.setAttribute("vastaus_list", list);
+		request.setAttribute("dao", dao);
+		
+		
 
 		RequestDispatcher rd = request.getRequestDispatcher("/jsp/vastaukset.jsp");
 		rd.forward(request, response);

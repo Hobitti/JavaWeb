@@ -139,7 +139,7 @@ public class Dao {
 		
 		@SuppressWarnings("null")
 		public Kysymys readKysymys(String id) {
-			Kysymys kysymykset = null;
+			Kysymys kysymykset = new Kysymys();
 			try {
 				String sql="select * from kysymykset where kysymysID = ?";
 				PreparedStatement pstmt=conn.prepareStatement(sql);
@@ -147,8 +147,8 @@ public class Dao {
 				ResultSet RS=pstmt.executeQuery();
 				while (RS.next()){
 					kysymykset.setId(RS.getInt("kysymysID"));
-					kysymykset.setKysymys(RS.getString("kysymys"));
-					kysymykset.setSelite(RS.getString("selite"));
+					kysymykset.setKysymys(RS.getString("Kysymys"));
+					//kysymykset.setSelite(RS.getString("Selite"));
 				}
 				return kysymykset;
 			}
@@ -230,21 +230,6 @@ public class Dao {
 				return null;
 			}
 		}
-		public ArrayList<Vastaukset> updateVastaus(Vastaukset k) {
-			try {
-				String sql="update vastaukset set Perustelu=?, Vastasi=? where VastausID=?";
-				PreparedStatement pstmt=conn.prepareStatement(sql);
-				pstmt.setString(1, k.getPerustelu());
-				pstmt.setInt(2, k.getVastasi());
-				pstmt.setInt(3, k.getId());
-				
-				pstmt.executeUpdate();
-				return readEhdokasVastaukset(k.getEhdokasId()+"");
-			}
-			catch(SQLException e) {
-				return null;
-			}
-		}
 		public ArrayList<Vastaukset> deleteVastaus(String id) {
 			try {
 				String sql="delete from vastaukset where VastausID=?";
@@ -256,5 +241,44 @@ public class Dao {
 			catch(SQLException e) {
 				return null;
 			}
+		}
+		public Vastaukset readVastaus(String id) {
+			Vastaukset vastaus = new Vastaukset();
+			try {
+				String sql="select * from Vastaukset where VastausID = ?";
+				PreparedStatement pstmt=conn.prepareStatement(sql);
+				pstmt.setString(1, id);
+				ResultSet RS=pstmt.executeQuery();
+				while (RS.next()){
+					vastaus.setId(RS.getInt("VastausID"));
+					vastaus.setKysymysId(RS.getInt("KysymysID"));
+					vastaus.setEhdokasId(RS.getInt("EhdokasID"));
+					vastaus.setVastasi(RS.getInt("Vastasi"));
+					vastaus.setPerustelu(RS.getString("Perustelu"));
+					
+				}
+				return vastaus;
+			}
+			catch(SQLException e) {
+				return null;
+			}
+		}
+		public Vastaukset updateVastaus(Vastaukset v) {
+			try {
+				String sql="update vastaukset set Vastasi=?, Perustelu=? where VastausID=?";
+				PreparedStatement pstmt=conn.prepareStatement(sql);
+				pstmt.setInt(1, v.getVastasi());
+				System.out.print(v.getVastasi());
+				pstmt.setString(2, v.getPerustelu());
+				System.out.print(v.getPerustelu());
+				pstmt.setInt(3, v.getId());
+				
+				pstmt.executeUpdate();
+				return readVastaus(v.getId()+"");
+			}
+			catch(SQLException e) {
+				return null;
+			}
+		
 		}
 }
