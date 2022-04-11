@@ -50,16 +50,16 @@ for (int i = 0; qList != null && i < qList.size(); i++) {
 		    out.println("<label for='q" + q.getId() + "_op1'>Täysin eri mieltä</label>");
 		    		
 		    out.println("<input type='radio' id='q" + q.getId() + "_op2' name='q" + q.getId() + "_answer' value='-1'>");
-		    out.println("<label for='q" + q.getId() + "_op2'>Täysin eri mieltä</label>");
+		    out.println("<label for='q" + q.getId() + "_op2'>Jokseenkin eri mieltä</label>");
 		    		
 		    out.println("<input type='radio' id='q" + q.getId() + "_op3' name='q" + q.getId() + "_answer' value='0'>");
-		    out.println("<label for='q" + q.getId() + "_op3'>Täysin eri mieltä</label>");
+		    out.println("<label for='q" + q.getId() + "_op3'>En osaa sanoa</label>");
 		    		
 		    out.println("<input type='radio' id='q" + q.getId() + "_op4' name='q" + q.getId() + "_answer' value='+1'>");
-		    out.println("<label for='q" + q.getId() + "_op4'>Täysin eri mieltä</label>");
+		    out.println("<label for='q" + q.getId() + "_op4'>Jokseenkin samaa mieltä</label>");
 		    		
 		    out.println("<input type='radio' id='q" + q.getId() + "_op5' name='q" + q.getId() + "_answer' value='+2'>");
-		    out.println("<label for='q" + q.getId() + "_op5'>Täysin eri mieltä</label>");
+		    out.println("<label for='q" + q.getId() + "_op5'>Täysin samaa mieltä</label>");
 		
 	out.println("</div>");
 	if(i == qList.size() - 1) {
