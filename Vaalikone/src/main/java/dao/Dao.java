@@ -7,7 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-
+import java.util.HashMap;
+import java.util.Map;
 import java.sql.Connection;
 
 import data.*;
@@ -126,8 +127,8 @@ public class Dao {
 				while (RS.next()){
 					Kysymys next = new Kysymys();
 					next.setId(RS.getInt("kysymysID"));
-					next.setKysymys(RS.getString("kysymys"));
-					next.setSelite(RS.getString("selite"));
+					next.setKysymys(RS.getString("Kysymys"));
+					next.setAxis(RS.getString("KysymysAkseli"));
 					list.add(next);
 				}
 				return list;
@@ -139,7 +140,7 @@ public class Dao {
 		
 		@SuppressWarnings("null")
 		public Kysymys readKysymys(String id) {
-			Kysymys kysymykset = null;
+			Kysymys kysymykset = new Kysymys();
 			try {
 				String sql="select * from kysymykset where kysymysID = ?";
 				PreparedStatement pstmt=conn.prepareStatement(sql);
@@ -147,8 +148,8 @@ public class Dao {
 				ResultSet RS=pstmt.executeQuery();
 				while (RS.next()){
 					kysymykset.setId(RS.getInt("kysymysID"));
-					kysymykset.setKysymys(RS.getString("kysymys"));
-					kysymykset.setSelite(RS.getString("selite"));
+					kysymykset.setKysymys(RS.getString("Kysymys"));
+					//kysymykset.setSelite(RS.getString("Selite"));
 				}
 				return kysymykset;
 			}
@@ -187,28 +188,170 @@ public class Dao {
 		}
 		
 		// Vastaukset
-		public ArrayList<Vastaus> readEhdokasVastaukset(String ehdokasID) {
-			
-			ArrayList<Vastaus> list = new ArrayList<>();
-			
+		public ArrayList<Vastaukset> readAllVastaukset() {
+			ArrayList<Vastaukset> list=new ArrayList<>();
 			try {
-				String sql = "FROM * FROM vastaus WHERE ehdokasID = ?";
-				PreparedStatement pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, ehdokasID);
-				ResultSet RS = pstmt.executeQuery(sql);
+				Statement stmt = conn.createStatement();
+				ResultSet RS = stmt.executeQuery("select * from Vastaukset");
 				while (RS.next()){
-					Vastaus next = new Vastaus();
-					next.setVastausID(RS.getInt("vastausID"));
-					next.setKysymysID(RS.getInt("kysymysID"));
-					next.setEhdokasID(RS.getInt("ehdokasID"));
-					next.setMielipide(RS.getInt("mielipide"));
-					next.setPerustelu(RS.getString("perustelu"));
+					Vastaukset next = new Vastaukset();
+					next.setId(RS.getInt("VastausID"));
+					next.setKysymysId(RS.getInt("KysymysID"));
+					next.setEhdokasId(RS.getInt("EhdokasID"));
+					next.setVastasi(RS.getInt("Vastasi"));
+					next.setPerustelu(RS.getString("Perustelu"));
 					list.add(next);
 				}
-				
 				return list;
+			}
+			catch(SQLException e) {
+				return null;
+			}
+		}
+		
+		public ArrayList<Vastaukset> readEhdokasVastaukset(String id) {
+			ArrayList<Vastaukset> list=new ArrayList<>();
+			try {
+				String sql="select * from Vastaukset where EhdokasID = ?";
+				PreparedStatement pstmt=conn.prepareStatement(sql);
+				pstmt.setString(1, id);
+				ResultSet RS=pstmt.executeQuery();
+				while (RS.next()){
+					Vastaukset next = new Vastaukset();
+					next.setId(RS.getInt("VastausID"));
+					next.setKysymysId(RS.getInt("KysymysID"));
+					next.setEhdokasId(RS.getInt("EhdokasID"));
+					next.setVastasi(RS.getInt("Vastasi"));
+					next.setPerustelu(RS.getString("Perustelu"));
+					list.add(next);
+				}
+				return list;
+			}
+			catch(SQLException e) {
+				return null;
+			}
+		}
+		
+		public ArrayList<Vastaukset> deleteVastaus(String id) {
+			try {
+				String sql="delete from vastaukset where VastausID=?";
+				PreparedStatement pstmt=conn.prepareStatement(sql);
+				pstmt.setString(1, id);
+				pstmt.executeUpdate();
+				return readAllVastaukset();
+			}
+			catch(SQLException e) {
+				return null;
+			}
+		}
+		
+		public Vastaukset readVastaus(String id) {
+			Vastaukset vastaus = new Vastaukset();
+			try {
+				String sql="select * from Vastaukset where VastausID = ?";
+				PreparedStatement pstmt=conn.prepareStatement(sql);
+				pstmt.setString(1, id);
+				ResultSet RS=pstmt.executeQuery();
+				while (RS.next()){
+					vastaus.setId(RS.getInt("VastausID"));
+					vastaus.setKysymysId(RS.getInt("KysymysID"));
+					vastaus.setEhdokasId(RS.getInt("EhdokasID"));
+					vastaus.setVastasi(RS.getInt("Vastasi"));
+					vastaus.setPerustelu(RS.getString("Perustelu"));
+					
+				}
+				return vastaus;
+			}
+			catch(SQLException e) {
+				return null;
+			}
+		}
+		
+		public Vastaukset updateVastaus(Vastaukset v) {
+			try {
+				String sql="update vastaukset set Vastasi=?, Perustelu=? where VastausID=?";
+				PreparedStatement pstmt=conn.prepareStatement(sql);
+				pstmt.setInt(1, v.getVastasi());
+				System.out.print(v.getVastasi());
+				pstmt.setString(2, v.getPerustelu());
+				System.out.print(v.getPerustelu());
+				pstmt.setInt(3, v.getId());
 				
-			} catch(SQLException e) {
+				pstmt.executeUpdate();
+				return readVastaus(v.getId()+"");
+			}
+			catch(SQLException e) {
+				return null;
+			}
+		
+		}
+		
+		public int countKysymysAkseliX() {
+			try {
+				int records = 0;
+				
+				String sql = "SELECT COUNT(KysymysID) FROM kysymykset WHERE KysymysAkseli = 'X'" ;
+			    PreparedStatement prest = conn.prepareStatement(sql);
+			    ResultSet rs = prest.executeQuery();
+			    while (rs.next()) {
+			    	records = rs.getInt(1);
+			    }
+			    System.out.println("Number of records: " + records);
+
+			    return records;
+			}
+			catch(SQLException e) {
+				return 0;
+			}
+		}
+		
+		public int countKysymysAkseliY() {
+			try {
+				int records = 0;
+				
+				String sql = "SELECT COUNT(KysymysID) FROM kysymykset WHERE KysymysAkseli = 'Y'" ;
+			    PreparedStatement prest = conn.prepareStatement(sql);
+			    ResultSet rs = prest.executeQuery();
+			    while (rs.next()) {
+			    	records = rs.getInt(1);
+			    }
+			    System.out.println("Number of records: " + records);
+
+			    return records;
+			}
+			catch(SQLException e) {
+				return 0;
+			}
+		}
+		
+		public Map<Integer, Float> readAllEhdokasVastausAverage() {
+			Map<Integer, Float> ehdokkaidenVastauksienAvg = new HashMap<Integer, Float>();
+			try {
+				String sql="SELECT EhdokasID, AVG(Vastasi) AS avg FROM vastaukset GROUP BY EhdokasID";
+				PreparedStatement pstmt=conn.prepareStatement(sql);
+				ResultSet RS = pstmt.executeQuery();
+				while (RS.next()){
+					ehdokkaidenVastauksienAvg.put(RS.getInt("EhdokasID"), RS.getFloat("avg"));
+				}
+				return ehdokkaidenVastauksienAvg;
+			}
+			catch(SQLException e) {
+				return null;
+			}
+		}
+		
+		public Map<Integer, Float> readBestEhdokkaat(float userAvg) {
+			Map<Integer, Float> bestEhdokkaat = new HashMap<Integer, Float>();
+			try {
+				String sql="SELECT EhdokasID, AVG(Vastasi) AS avg FROM vastaukset GROUP BY EhdokasID ORDER BY ABS(AVG(Vastasi) - " + userAvg + ") ASC LIMIT 3;";
+				PreparedStatement pstmt = conn.prepareStatement(sql);
+				ResultSet RS = pstmt.executeQuery();
+				while (RS.next()){
+					bestEhdokkaat.put(RS.getInt("EhdokasID"), RS.getFloat("avg"));
+				}
+				return bestEhdokkaat;
+			}
+			catch(SQLException e) {
 				return null;
 			}
 		}
