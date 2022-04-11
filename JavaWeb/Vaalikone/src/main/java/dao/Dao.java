@@ -208,4 +208,53 @@ public class Dao {
 		
 		
 	}
+		public ArrayList<Vastaukset> readEhdokasVastaukset(String id) {
+			ArrayList<Vastaukset> list=new ArrayList<>();
+			try {
+				String sql="select * from Vastaukset where EhdokasID = ?";
+				PreparedStatement pstmt=conn.prepareStatement(sql);
+				pstmt.setString(1, id);
+				ResultSet RS=pstmt.executeQuery();
+				while (RS.next()){
+					Vastaukset next = new Vastaukset();
+					next.setId(RS.getInt("VastausID"));
+					next.setKysymysId(RS.getInt("KysymysID"));
+					next.setEhdokasId(RS.getInt("EhdokasID"));
+					next.setVastasi(RS.getInt("Vastasi"));
+					next.setPerustelu(RS.getString("Perustelu"));
+					list.add(next);
+				}
+				return list;
+			}
+			catch(SQLException e) {
+				return null;
+			}
+		}
+		public ArrayList<Vastaukset> updateVastaus(Vastaukset k) {
+			try {
+				String sql="update vastaukset set Perustelu=?, Vastasi=? where VastausID=?";
+				PreparedStatement pstmt=conn.prepareStatement(sql);
+				pstmt.setString(1, k.getPerustelu());
+				pstmt.setInt(2, k.getVastasi());
+				pstmt.setInt(3, k.getId());
+				
+				pstmt.executeUpdate();
+				return readEhdokasVastaukset(k.getEhdokasId()+"");
+			}
+			catch(SQLException e) {
+				return null;
+			}
+		}
+		public ArrayList<Vastaukset> deleteVastaus(String id) {
+			try {
+				String sql="delete from vastaukset where VastausID=?";
+				PreparedStatement pstmt=conn.prepareStatement(sql);
+				pstmt.setString(1, id);
+				pstmt.executeUpdate();
+				return readAllVastaukset();
+			}
+			catch(SQLException e) {
+				return null;
+			}
+		}
 }

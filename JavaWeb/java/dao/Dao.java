@@ -43,7 +43,7 @@ public class Dao {
 			return false;
 		}
 	}
-	//Ehdokas tablen toiminnot alkavat t√§st√§
+	//Ehdokas tablen toiminnot alkavat t‰st‰
 	public ArrayList<Ehdokas> readAllEhdokas() {
 		ArrayList<Ehdokas> list=new ArrayList<>();
 		try {
@@ -116,18 +116,17 @@ public class Dao {
 			}
 		}
 		
-		//Kysymykset Tablen toiminnota alkavat t√§st√§
+		//Kysymykset Tablen toiminnota alkavat t‰st‰
 		public ArrayList<Kysymys> readAllKysymykset() {
 			ArrayList<Kysymys> list=new ArrayList<>();
 			try {
 				Statement stmt = conn.createStatement();
-				ResultSet RS = stmt.executeQuery("select * from kysymykset;");
+				ResultSet RS = stmt.executeQuery("select * from kysymykset");
 				while (RS.next()){
 					Kysymys next = new Kysymys();
-					next.setId(RS.getInt("KysymysID"));
-					next.setKysymys(RS.getString("Kysymys"));
-					//next.setSelite(RS.getString("selite"));
-					System.out.print(next.getKysymys());
+					next.setId(RS.getInt("kysymysID"));
+					next.setKysymys(RS.getString("kysymys"));
+					next.setSelite(RS.getString("selite"));
 					list.add(next);
 				}
 				return list;
@@ -186,75 +185,4 @@ public class Dao {
 			}
 		}
 		
-		public ArrayList<Vastaukset> readAllVastaukset() {
-			ArrayList<Vastaukset> list=new ArrayList<>();
-			try {
-				Statement stmt = conn.createStatement();
-				ResultSet RS = stmt.executeQuery("select * from Vastaukset");
-				while (RS.next()){
-					Vastaukset next = new Vastaukset();
-					next.setId(RS.getInt("VastausID"));
-					next.setKysymysId(RS.getInt("KysymysID"));
-					next.setEhdokasId(RS.getInt("EhdokasID"));
-					next.setVastasi(RS.getInt("Vastasi"));
-					next.setPerustelu(RS.getString("Perustelu"));
-					list.add(next);
-				}
-				return list;
-			}
-			catch(SQLException e) {
-				return null;
-			}
-		
-		
 	}
-		public ArrayList<Vastaukset> readEhdokasVastaukset(String id) {
-			ArrayList<Vastaukset> list=new ArrayList<>();
-			try {
-				String sql="select * from Vastaukset where EhdokasID = ?";
-				PreparedStatement pstmt=conn.prepareStatement(sql);
-				pstmt.setString(1, id);
-				ResultSet RS=pstmt.executeQuery();
-				while (RS.next()){
-					Vastaukset next = new Vastaukset();
-					next.setId(RS.getInt("VastausID"));
-					next.setKysymysId(RS.getInt("KysymysID"));
-					next.setEhdokasId(RS.getInt("EhdokasID"));
-					next.setVastasi(RS.getInt("Vastasi"));
-					next.setPerustelu(RS.getString("Perustelu"));
-					list.add(next);
-				}
-				return list;
-			}
-			catch(SQLException e) {
-				return null;
-			}
-		}
-		public ArrayList<Vastaukset> updateVastaus(Vastaukset k) {
-			try {
-				String sql="update vastaukset set Perustelu=?, Vastasi=? where VastausID=?";
-				PreparedStatement pstmt=conn.prepareStatement(sql);
-				pstmt.setString(1, k.getPerustelu());
-				pstmt.setInt(2, k.getVastasi());
-				pstmt.setInt(3, k.getId());
-				
-				pstmt.executeUpdate();
-				return readEhdokasVastaukset(k.getEhdokasId()+"");
-			}
-			catch(SQLException e) {
-				return null;
-			}
-		}
-		public ArrayList<Vastaukset> deleteVastaus(String id) {
-			try {
-				String sql="delete from vastaukset where VastausID=?";
-				PreparedStatement pstmt=conn.prepareStatement(sql);
-				pstmt.setString(1, id);
-				pstmt.executeUpdate();
-				return readAllVastaukset();
-			}
-			catch(SQLException e) {
-				return null;
-			}
-		}
-}

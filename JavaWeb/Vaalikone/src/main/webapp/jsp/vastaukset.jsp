@@ -27,7 +27,7 @@ ArrayList<Vastaukset> qList = (ArrayList<Vastaukset>)request.getAttribute("vasta
 for (int i = 0; qList != null && i < qList.size(); i++) {
 	Vastaukset q = qList.get(i);
 	out.println("<div class='question_card'>");
-		out.println("<h2>" + q.getKysymysId() + " <span></span></h2>");
+		out.println("<h2>" + q.getId() + " <span>"+ q.getPerustelu() +"</span></h2>");
 		
 		out.println(" <p> <a href='./muokkaa_kysymyksia.html?id="+q.getId() +"' >Muokkaa kysymyksiä</a> <a href='./poista_kysymyksia.html?id="+q.getId() +"' onclick='window.confirm()'>Poista kysymyksiä</a></p> ");
 		
