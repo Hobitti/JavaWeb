@@ -80,31 +80,36 @@ public class SaveAnswer extends HttpServlet {
             }  
         }
         
-        average = total / (float)count;
+        if(count != 0) {
+        	average = total / (float)count;
+        	
+        	if (dao.getConnection()) {
+            	topEhdokkaatAvg = dao.readBestEhdokkaat(average);
+    			System.out.println("Connection OK!");
+    		} else {
+    			System.out.println("No connection to database");
+    		}
+            
+            if(topEhdokkaatAvg != null) {
+            	for (Map.Entry<Integer, Float> me : topEhdokkaatAvg.entrySet()) {
+            		topEhdokkaat.add(dao.readEhdokas(Integer.toString(me.getKey())));
+               }
+            }
+            
+            request.setAttribute("top_ehdokkaat", topEhdokkaat);
+        } else {
+        	request.setAttribute("top_ehdokkaat", null);
+        }
+        
         
 //        Debugging messages
-        
+//        
 //        response.getWriter().print("Count: " + count);
 //        response.getWriter().print("<br>");
 //        response.getWriter().print("<br>");
 //        response.getWriter().print("Total: " + total);
 //        response.getWriter().print("<br>");
 //        response.getWriter().print("Average: " + average);
-        
-        if (dao.getConnection()) {
-        	topEhdokkaatAvg = dao.readBestEhdokkaat(average);
-			System.out.println("Connection OK!");
-		} else {
-			System.out.println("No connection to database");
-		}
-        
-        if(topEhdokkaatAvg != null) {
-        	for (Map.Entry<Integer, Float> me : topEhdokkaatAvg.entrySet()) {
-        		topEhdokkaat.add(dao.readEhdokas(Integer.toString(me.getKey())));
-           }
-        }
-        
-        request.setAttribute("top_ehdokkaat", topEhdokkaat);
 
 		RequestDispatcher rd = request.getRequestDispatcher("/jsp/parhaat_ehdokkaat.jsp");
 		rd.forward(request, response);
