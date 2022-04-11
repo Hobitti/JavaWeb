@@ -80,6 +80,7 @@ public class Dao {
 					ehdokas.setKunta(RS.getInt("KuntaID"));
 					ehdokas.setSlogan(RS.getString("Slogan"));
 					ehdokas.setPuolue(RS.getInt("PuolueID"));
+					ehdokas.setKuvaus(RS.getString("Kuvaus"));
 				}
 				return ehdokas;
 			}
@@ -284,44 +285,6 @@ public class Dao {
 				return null;
 			}
 		
-		}
-		
-		public int countKysymysAkseliX() {
-			try {
-				int records = 0;
-				
-				String sql = "SELECT COUNT(KysymysID) FROM kysymykset WHERE KysymysAkseli = 'X'" ;
-			    PreparedStatement prest = conn.prepareStatement(sql);
-			    ResultSet rs = prest.executeQuery();
-			    while (rs.next()) {
-			    	records = rs.getInt(1);
-			    }
-			    System.out.println("Number of records: " + records);
-
-			    return records;
-			}
-			catch(SQLException e) {
-				return 0;
-			}
-		}
-		
-		public int countKysymysAkseliY() {
-			try {
-				int records = 0;
-				
-				String sql = "SELECT COUNT(KysymysID) FROM kysymykset WHERE KysymysAkseli = 'Y'" ;
-			    PreparedStatement prest = conn.prepareStatement(sql);
-			    ResultSet rs = prest.executeQuery();
-			    while (rs.next()) {
-			    	records = rs.getInt(1);
-			    }
-			    System.out.println("Number of records: " + records);
-
-			    return records;
-			}
-			catch(SQLException e) {
-				return 0;
-			}
 		}
 		
 		public Map<Integer, Float> readAllEhdokasVastausAverage() {
