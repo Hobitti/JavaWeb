@@ -12,9 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import dao.Dao;
 import data.Kysymys;
 
-/**
- * Servlet implementation class ShowFish
- */
+
+
 @WebServlet("/kysymykset")
 public class ReadKysymys extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -22,7 +21,8 @@ public class ReadKysymys extends HttpServlet {
 
 	@Override
 	public void init() {
-		dao = new Dao("jdbc:mysql://localhost:3306/javaweb", "root", "12345");
+
+		dao = new Dao("jdbc:mysql://localhost:3306/javaweb", "root", "root");
 	}
 
 	/**
@@ -36,13 +36,17 @@ public class ReadKysymys extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
+
+	
+	@Override
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		ArrayList<Kysymys> list = null;
 		
 		if (dao.getConnection()) {
 			list = dao.readAllKysymykset();
 			System.out.println("Connection OK!");
-			if(list==null) System.out.println("saatana");
+
 		} else {
 			System.out.println("No connection to database");
 		}
