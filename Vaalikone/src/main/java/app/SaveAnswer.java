@@ -1,5 +1,4 @@
 package app;
-import data.Kysymys;
 import data.Vastaukset;
 import dao.Dao;
 
@@ -7,6 +6,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -46,23 +46,8 @@ public class SaveAnswer extends HttpServlet {
         int total = 0;
         float average = 0;
         int count = 0;
-        int akseliCountX = 0;
-        int akseliCountY = 0;
         
-        int vastaajaX = 0;
-        int vastaajaY = 0;
-        
-        ArrayList<Vastaukset> ehdokasVastaukset = null;
-        
-        if (dao.getConnection()) {
-        	akseliCountX = dao.countKysymysAkseliX();
-        	akseliCountY = dao.countKysymysAkseliY();
-        	ehdokasVastaukset = dao.readAllVastaukset();
-			System.out.println("Connection OK!");
-		} else {
-			System.out.println("No connection to database");
-		}
-        
+        Map<Integer, Float> bestEhdokkaat = null;
         
         // k‰yd‰‰n k‰ytt‰j‰n vastaukset l‰pi
         Enumeration<String> parameterNames = request.getParameterNames();
@@ -92,23 +77,35 @@ public class SaveAnswer extends HttpServlet {
         
         average = total / (float)count;
         
-        for(int i = 0; i < ehdokasVastaukset.size(); i++) {
-        	response.getWriter().print("<br>");
-            response.getWriter().print("ehdokas: " + ehdokasVastaukset.get(i).getVastasi());
-        }
-        
-        
-        
+        response.getWriter().print("Count: " + count);
+        response.getWriter().print("<br>");
         response.getWriter().print("<br>");
         response.getWriter().print("Total: " + total);
         response.getWriter().print("<br>");
         response.getWriter().print("Average: " + average);
-        response.getWriter().print("<br>");
-        response.getWriter().print("X: " + akseliCountX);
-        response.getWriter().print("<br>");
-        response.getWriter().print("Y: " + akseliCountY);
-        response.getWriter().print("<br>");
-        response.getWriter().print("ehdokas: " + ehdokasVastaukset.get(0).getVastasi());
+        
+        if (dao.getConnection()) {
+        	bestEhdokkaat = dao.readBestEhdokkaat(average);
+			System.out.println("Connection OK!");
+		} else {
+			System.out.println("No connection to database");
+		}
+        
+        
+        
+        if(bestEhdokkaat != null) {
+        	for (Map.Entry<Integer, Float> me : bestEhdokkaat.entrySet()) {
+
+            	// Printing keys
+            	response.getWriter().print("<br>Top 3 ehdokkaat");
+            	response.getWriter().print("EhdokasId: " + me.getKey());
+            	response.getWriter().print("<br>Avg: " + me.getValue());
+           }
+        } else {
+        	response.getWriter().print("<br>Ehdokkaita ei voida suositella.");
+        }
+        
+
     }
 
 }
