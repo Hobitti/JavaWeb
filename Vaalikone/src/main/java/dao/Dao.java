@@ -285,13 +285,12 @@ public class Dao {
 		}
 		public Vastaukset insertVastaus(Vastaukset vastaus) {
 			try {
-				String sql="INSERT INTO vastaukset VALUES (?, ?, ?, ?, ?);";
+				String sql="INSERT INTO vastaukset (KysymysID, EhdokasID, Vastasi, Perustelu) VALUES (?, ?, ?, ?);";
 				PreparedStatement pstmt=conn.prepareStatement(sql);
-				pstmt.setInt(1, 4);
-				pstmt.setInt(2, 4);
-				pstmt.setInt(3, 1);
-				pstmt.setInt(4, vastaus.getVastasi());
-				pstmt.setString(5, vastaus.getPerustelu());
+				pstmt.setInt(1, 1);
+				pstmt.setInt(2, 1);
+				pstmt.setInt(3, vastaus.getVastasi());
+				pstmt.setString(4, vastaus.getPerustelu());
 				pstmt.executeUpdate();
 			}
 			catch(SQLException e) {

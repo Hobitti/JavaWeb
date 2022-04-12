@@ -22,7 +22,7 @@ public class BrowseVastaukset extends HttpServlet {
 	
 	@Override
 	public void init() {
-		dao = new Dao("jdbc:mysql://localhost:3306/javaweb", "root", "Suomipoika11");
+		dao = new Dao("jdbc:mysql://localhost:3306/javaweb", "root", "root");
 	}
 
 	
