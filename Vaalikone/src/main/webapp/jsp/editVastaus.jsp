@@ -34,8 +34,6 @@
  		
  		int vastasi=Integer.parseInt(request.getParameter("Vastaus"));
  		String perustelu = request.getParameter("Perustelu");
- 		
- 		
  		q.setVastasi(vastasi);
  		q.setPerustelu(perustelu);	
  		q=dao.updateVastaus(q);
@@ -47,6 +45,8 @@
 		int vnum= q.getVastasi();
 		out.println("<h2>"+k.getKysymys()+"</h2>");
 		out.println("<form action='editVastaus' method='get'>");
+		
+		out.println("<input type='hidden' value='"+request.getParameter("id")+"' name='id'>");
 		
 		if(vnum==-2)out.println("<input type='radio' id='q_op1' name='Vastaus' value='-'checked=2'checked'>");
 		else out.println("<input type='radio' id='q_op1' name='Vastaus' value='-2'");
