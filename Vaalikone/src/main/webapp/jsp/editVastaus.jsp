@@ -42,45 +42,50 @@
 	if(q==null){
 		out.println("<b>Jokin meni vikaan</b>");
 	}
-	int vnum= q.getVastasi();
-	out.println("<h2>"+k.getKysymys()+"</h2>");
-	out.println("<form action='editVastaus' method='get'>");
+	else {
+		int vnum= q.getVastasi();
+		out.println("<h2>"+k.getKysymys()+"</h2>");
+		out.println("<form action='editVastaus' method='get'>");
+		
+		if(vnum==-2)out.println("<input type='radio' id='q_op1' name='Vastaus' value='-'checked=2'checked'>");
+		else out.println("<input type='radio' id='q_op1' name='Vastaus' value='-2'");
+		out.println("<label for='q_op1'>Täysin eri mieltä</label>");
+	    		
+		out.println("<br>");
+				
+		if(vnum==-1)out.println("<input type='radio' id='q_op2' name='Vastaus' value='-1' checked='checked'>");
+		else out.println("<input type='radio' id='q_op2' name='Vastaus' value='-1'");
+	    out.println("<label for='q_op2'>Hieman eri mieltä</label>");
+	    		
+	    out.println("<br>");
+	    
+	    if(vnum==0)out.println("<input type='radio' id='q_op3' name='Vastaus' value='0' checked='checked'>");
+		else out.println("<input type='radio' id='q_op3' name='Vastaus' value='0'");
+	    out.println("<label for='q_op3'>En osaa sanoa</label>");
 	
-	if(vnum==1)out.println("<input type='radio' id='q_op1' name='Vastaus' value='1' checked='checked'>");
-	else out.println("<input type='radio' id='q_op1' name='Vastaus' value='1'");
-	out.println("<label for='q_op1'>Täysin eri mieltä</label>");
-    		
-	out.println("<br>");
-			
-	if(vnum==2)out.println("<input type='radio' id='q_op2' name='Vastaus' value='2' checked='checked'>");
-	else out.println("<input type='radio' id='q_op2' name='Vastaus' value='2'");
-    out.println("<label for='q_op2'>Hieman eri mieltä</label>");
-    		
-    out.println("<br>");
-    
-    if(vnum==3)out.println("<input type='radio' id='q_op3' name='Vastaus' value='3' checked='checked'>");
-	else out.println("<input type='radio' id='q_op3' name='Vastaus' value='3'");
-    out.println("<label for='q_op3'>En osaa sanoa</label>");
-
-    out.println("<br>");
-    		
-    if(vnum==4)out.println("<input type='radio' id='q_op4' name='Vastaus' value='4' checked='checked'>");
-	else out.println("<input type='radio' id='q_op4' name='Vastaus' value='4'");
-    out.println("<label for='q_op4'>Jokseenkin samaa mieltä</label>");
-    	
-    out.println("<br>");
-    		
-    if(q.getVastasi()==5)out.println("<input type='radio' id='q_op5' name='Vastaus' value='5' checked='checked'>");
-	else out.println("<input type='radio' id='q_op5' name='Vastaus' value='5'");
-    out.println("<label for='q_op5'>Täysin samaa mieltä</label>");
-    
-    out.println("<br>");
-    		
-   	out.println("<textarea name='Perustelu' rows='4' cols='20' Required >"+q.getPerustelu()+"</textarea >");
-   	
-   	out.println("<br>");
-   	
-   	out.println("<input type='submit' value='Päivitä'>");
+	    out.println("<br>");
+	    		
+	    if(vnum==1)out.println("<input type='radio' id='q_op4' name='Vastaus' value='1' checked='checked'>");
+		else out.println("<input type='radio' id='q_op4' name='Vastaus' value='1'");
+	    out.println("<label for='q_op4'>Jokseenkin samaa mieltä</label>");
+	    	
+	    out.println("<br>");
+	    		
+	    if(q.getVastasi()==2)out.println("<input type='radio' id='q_op5' name='Vastaus' value='2' checked='checked'>");
+		else out.println("<input type='radio' id='q_op5' name='Vastaus' value='2'");
+	    out.println("<label for='q_op5'>Täysin samaa mieltä</label>");
+	    
+	    out.println("<br>");
+	    		
+	   	out.println("<textarea name='Perustelu' rows='4' cols='20' Required >"+q.getPerustelu()+"</textarea >");
+	   	
+	   	out.println("<br>");
+	   	
+	   	out.println("<input type='submit' value='Päivitä'>");
+	   	
+	   	out.println("<br>");
+	}
+   	out.println("<a href='./vastaukset'>Palaa</a>");
 
 %>
 		

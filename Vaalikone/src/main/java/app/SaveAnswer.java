@@ -32,7 +32,7 @@ public class SaveAnswer extends HttpServlet {
 	
 	@Override
 	public void init() {
-		dao = new Dao("jdbc:mysql://localhost:3306/javaweb", "root", "root");
+		dao = new Dao("jdbc:mysql://localhost:3306/javaweb", "root", "12345");
 	}
 
        
@@ -58,7 +58,7 @@ public class SaveAnswer extends HttpServlet {
         Map<Integer, Float> topEhdokkaatAvg = null;
         ArrayList<Ehdokas> topEhdokkaat = new ArrayList<Ehdokas>();
         
-        // käydään käyttäjän vastaukset läpi
+        // k�yd��n k�ytt�j�n vastaukset l�pi
         Enumeration<String> parameterNames = request.getParameterNames();
         
         while (parameterNames.hasMoreElements()) {
@@ -79,7 +79,7 @@ public class SaveAnswer extends HttpServlet {
                 }
             }  
         }
-        
+ 
         if(count != 0) {
         	average = total / (float)count;
         	
@@ -100,6 +100,7 @@ public class SaveAnswer extends HttpServlet {
         } else {
         	request.setAttribute("top_ehdokkaat", null);
         }
+
         
         
 //        Debugging messages
