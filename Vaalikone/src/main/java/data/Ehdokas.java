@@ -7,6 +7,8 @@ public class Ehdokas {
 	private String slogan;
 	private int puolue;
 	private String kuvaus;
+	private String kuntaS;
+	private String puolueS;
 
 	public Ehdokas(int id, String nimi, int kunta, String slogan, int puolue, String kuvaus) {
 		super();
@@ -54,6 +56,14 @@ public class Ehdokas {
 		this.kunta = kunta;
 	}
 	
+	public String getKuntaS() {
+		return kuntaS;
+	}
+	
+	public void setKuntaS(String kuntaS) {
+		this.kuntaS = kuntaS;
+	}
+	
 	public String getSlogan() {
 		return slogan;
 	}
@@ -68,6 +78,14 @@ public class Ehdokas {
 	
 	public void setPuolue(int puolue) {
 		this.puolue = puolue;
+	}
+	
+	public String getPuolueS() {
+		return puolueS;
+	}
+	
+	public void setPuolueS(String puolueS) {
+		this.puolueS = puolueS;
 	}
 
 }

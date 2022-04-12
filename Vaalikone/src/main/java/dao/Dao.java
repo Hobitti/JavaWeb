@@ -71,7 +71,7 @@ public class Dao {
 		public Ehdokas readEhdokas(String id) {
 			Ehdokas ehdokas=null;
 			try {
-				String sql="select * from ehdokas where EhdokasID=?";
+				String sql="SELECT EhdokasID, ehdokas.Nimi, ehdokas.KuntaID, kunta.Nimi AS KunnanNimi, Slogan, ehdokas.PuolueID, puolue.Nimi AS PuolueenNimi, ehdokas.Kuvaus FROM ehdokas INNER JOIN kunta ON ehdokas.KuntaID = kunta.KuntaID INNER JOIN puolue ON ehdokas.PuolueID = puolue.PuolueID WHERE EhdokasID = ?";
 				PreparedStatement pstmt=conn.prepareStatement(sql);
 				pstmt.setString(1, id);
 				ResultSet RS=pstmt.executeQuery();
@@ -80,8 +80,10 @@ public class Dao {
 					ehdokas.setId(RS.getInt("EhdokasID"));
 					ehdokas.setNimi(RS.getString("Nimi"));
 					ehdokas.setKunta(RS.getInt("KuntaID"));
+					ehdokas.setKuntaS(RS.getString("KunnanNimi"));
 					ehdokas.setSlogan(RS.getString("Slogan"));
 					ehdokas.setPuolue(RS.getInt("PuolueID"));
+					ehdokas.setPuolueS(RS.getString("PuolueenNimi"));
 					ehdokas.setKuvaus(RS.getString("Kuvaus"));
 				}
 				return ehdokas;
