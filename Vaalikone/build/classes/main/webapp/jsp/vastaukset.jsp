@@ -1,4 +1,4 @@
-
+<%@page import="dao.Dao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
  
@@ -30,7 +30,6 @@ if( request.getParameter("mode")!=null && request.getParameter("id")!=null && re
   Dao dao = (Dao)request.getAttribute("dao"); 
   String id=request.getParameter("id");
   dao.deleteVastaus(id);
-  qList = dao.readEhdokasVastaukset("2");
   
   
 }
@@ -40,7 +39,7 @@ if(qList==null){
 for (int i = 0; qList != null && i < qList.size(); i++) {
 	Vastaukset q = qList.get(i);
 	out.println("<h2>" + q.getId() + " <span>"+ q.getPerustelu() +"</span></h2>");		
-	out.println("<p> <a href='./editVastaus?id="+q.getId() +"' >Muokkaa kysymystä</a> <br>");
+	out.println("<p> <a href='./editVastau?id="+q.getId() +"' >Muokkaa kysymystä</a> <br>");
 	out.println("<a href='./vastaukset?id="+q.getId() +"&mode=1' onclick='window.confirm()'>Poista kysymyksiä</a></p> ");
 
   

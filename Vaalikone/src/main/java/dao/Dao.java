@@ -47,7 +47,8 @@ public class Dao {
 		}
 	}
 
-	//Ehdokas tablen toiminnot alkavat t‰st‰
+
+	//Ehdokas tablen toiminnot alkavat t√§st√§
 	public ArrayList<Ehdokas> readAllEhdokas() {
 		ArrayList<Ehdokas> list=new ArrayList<>();
 		try {
@@ -123,7 +124,9 @@ public class Dao {
 			}
 		}
 		
-		//Kysymykset Tablen toiminnota alkavat t‰st‰
+
+		//Kysymykset Tablen toiminnota alkavat t√§st√§
+
 		public ArrayList<Kysymys> readAllKysymykset() {
 			ArrayList<Kysymys> list=new ArrayList<>();
 			try {
@@ -324,6 +327,20 @@ public class Dao {
 				return null;
 			}
 		}
-		
-	}
+		public Vastaukset insertVastaus(Vastaukset vastaus) {
+			try {
+				String sql="INSERT INTO vastaukset (KysymysID, EhdokasID, Vastasi, Perustelu) VALUES (?, ?, ?, ?);";
+				PreparedStatement pstmt=conn.prepareStatement(sql);
+				pstmt.setInt(1, 1);
+				pstmt.setInt(2, 1);
+				pstmt.setInt(3, vastaus.getVastasi());
+				pstmt.setString(4, vastaus.getPerustelu());
+				pstmt.executeUpdate();
+			}
+			catch(SQLException e) {
+				return null;
+			}
+			return vastaus;
+		}
+}
 

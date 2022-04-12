@@ -17,12 +17,21 @@
       <tr>
         <td colspan="2" style="font-weight:bold;">Palvelut</td>        
       </tr>
+
+            <tr>
+        <td><a href='/annaVastaus'>Ehdokas Vastaus</a></td>  
+      </tr>
+
       <tr>
         <td><a href='/kysymykset'>Kysymykset</a></td>  
       </tr>
       <tr>
         <td><a href='/vastaukset'>Vastaukset</a></td>
       </tr>
+      <tr>
+        <td><a href='/SaveAnswer'>Save answer</a></td>
+      </tr>
+
     </table>
     </div">
     <div class="grid-right"></div>  
