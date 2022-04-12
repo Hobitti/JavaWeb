@@ -28,6 +28,8 @@ if(eList != null) {
 		Ehdokas e = eList.get(i);
 		out.println("<div class='ehdokas-card'>");
 			out.println("<h2>" + e.getNimi() + "</h2>");
+			out.println("<h3>" + e.getPuolueS() + "</h3>");
+			out.println("<h4>" + e.getKuntaS() + "</h4>");
 			if(e.getSlogan() != null) {
 				out.println("<p>" + e.getSlogan() + "</p>");
 			}
@@ -41,6 +43,9 @@ if(eList != null) {
 
 %>
 </section>
-<a href="/kysymykset">Vastaa uudestaan</a>
+<div class="flex-row link">
+	<a href="/kysymykset">Vastaa uudestaan</a>
+</div>
+
 </body>
 </html>
