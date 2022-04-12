@@ -43,6 +43,9 @@ if(eList != null) {
 
 %>
 </section>
-<a href="/kysymykset">Vastaa uudestaan</a>
+<div class="flex-row link">
+	<a href="/kysymykset">Vastaa uudestaan</a>
+</div>
+
 </body>
 </html>
