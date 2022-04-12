@@ -23,7 +23,7 @@ public class EditVastaus extends HttpServlet {
 
 	@Override
 	public void init() {
-		dao = new Dao("jdbc:mysql://localhost:3306/javaweb", "root", "12345");
+		dao = new Dao("jdbc:mysql://localhost:3306/javaweb", "root", "root");
 	}
 
 	/**

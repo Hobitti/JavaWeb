@@ -30,6 +30,7 @@ if( request.getParameter("mode")!=null && request.getParameter("id")!=null && re
   Dao dao = (Dao)request.getAttribute("dao"); 
   String id=request.getParameter("id");
   dao.deleteVastaus(id);
+  qList = dao.readEhdokasVastaukset("2");
   
   
 }
