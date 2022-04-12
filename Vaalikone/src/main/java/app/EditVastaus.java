@@ -40,10 +40,9 @@ public class EditVastaus extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Vastaukset list = null;
 		Kysymys kys=null;
-		Integer.parseInt("23");
 		
 		if (dao.getConnection()) {
-			list = dao.readVastaus("2");
+			list = dao.readVastaus(request.getParameter("id"));
 			kys=dao.readKysymys(list.getKysymysId()+"");
 			System.out.println("Connection OK!");
 			
