@@ -58,7 +58,7 @@ public class SaveAnswer extends HttpServlet {
         Map<Integer, Float> topEhdokkaatAvg = null;
         ArrayList<Ehdokas> topEhdokkaat = new ArrayList<Ehdokas>();
         
-        // käydään käyttäjän vastaukset läpi
+        // kï¿½ydï¿½ï¿½n kï¿½yttï¿½jï¿½n vastaukset lï¿½pi
         Enumeration<String> parameterNames = request.getParameterNames();
         
         while (parameterNames.hasMoreElements()) {
@@ -79,31 +79,38 @@ public class SaveAnswer extends HttpServlet {
                 }
             }  
         }
-        average = total / (float)count;
+ 
+        if(count != 0) {
+        	average = total / (float)count;
+        	
+        	if (dao.getConnection()) {
+            	topEhdokkaatAvg = dao.readBestEhdokkaat(average);
+    			System.out.println("Connection OK!");
+    		} else {
+    			System.out.println("No connection to database");
+    		}
+            
+            if(topEhdokkaatAvg != null) {
+            	for (Map.Entry<Integer, Float> me : topEhdokkaatAvg.entrySet()) {
+            		topEhdokkaat.add(dao.readEhdokas(Integer.toString(me.getKey())));
+               }
+            }
+            
+            request.setAttribute("top_ehdokkaat", topEhdokkaat);
+        } else {
+        	request.setAttribute("top_ehdokkaat", null);
+        }
+
+        
         
 //        Debugging messages
-        
+//        
 //        response.getWriter().print("Count: " + count);
 //        response.getWriter().print("<br>");
 //        response.getWriter().print("<br>");
 //        response.getWriter().print("Total: " + total);
 //        response.getWriter().print("<br>");
 //        response.getWriter().print("Average: " + average);
-        
-        if (dao.getConnection()) {
-        	topEhdokkaatAvg = dao.readBestEhdokkaat(average);
-			System.out.println("Connection OK!");
-		} else {
-			System.out.println("No connection to database");
-		}
-        
-        if(topEhdokkaatAvg != null) {
-        	for (Map.Entry<Integer, Float> me : topEhdokkaatAvg.entrySet()) {
-        		topEhdokkaat.add(dao.readEhdokas(Integer.toString(me.getKey())));
-           }
-        }
-        
-        request.setAttribute("top_ehdokkaat", topEhdokkaat);
 
 		RequestDispatcher rd = request.getRequestDispatcher("/jsp/parhaat_ehdokkaat.jsp");
 		rd.forward(request, response);
