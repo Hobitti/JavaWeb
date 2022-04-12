@@ -58,7 +58,7 @@ public class SaveAnswer extends HttpServlet {
         Map<Integer, Float> topEhdokkaatAvg = null;
         ArrayList<Ehdokas> topEhdokkaat = new ArrayList<Ehdokas>();
         
-        // k√§yd√§√§n k√§ytt√§j√§n vastaukset l√§pi
+        // k‰yd‰‰n k‰ytt‰j‰n vastaukset l‰pi
         Enumeration<String> parameterNames = request.getParameterNames();
         
         while (parameterNames.hasMoreElements()) {
