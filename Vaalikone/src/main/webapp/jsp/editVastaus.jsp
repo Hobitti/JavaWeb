@@ -26,15 +26,14 @@
   <div class="grid-left"></div>
   <div class="grid-item">
  <%
-	Vastaukset q = (Vastaukset)request.getAttribute("vastaus_list");
+
+ 	Dao dao = (Dao)request.getAttribute("dao"); 
  	Kysymys k=(Kysymys)request.getAttribute("kysymys");
- 	
+ 	Vastaukset q = dao.readVastaus(request.getParameter("id"));
  	if(request.getParameter("Perustelu")!=null && request.getParameter("Vastaus")!=null){
  		
  		int vastasi=Integer.parseInt(request.getParameter("Vastaus"));
  		String perustelu = request.getParameter("Perustelu");
- 		Dao dao = (Dao)request.getAttribute("dao"); 
- 		
  		q.setVastasi(vastasi);
  		q.setPerustelu(perustelu);	
  		q=dao.updateVastaus(q);
@@ -46,7 +45,9 @@
 		int vnum= q.getVastasi();
 		out.println("<h2>"+k.getKysymys()+"</h2>");
 		out.println("<form action='editVastaus' method='get'>");
-		
+
+		out.println("<input type='hidden' value='"+request.getParameter("id")+"' name='id'>");
+
 		if(vnum==-2)out.println("<input type='radio' id='q_op1' name='Vastaus' value='-'checked=2'checked'>");
 		else out.println("<input type='radio' id='q_op1' name='Vastaus' value='-2'");
 		out.println("<label for='q_op1'>Täysin eri mieltä</label>");

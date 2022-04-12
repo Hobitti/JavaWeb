@@ -47,7 +47,8 @@ public class Dao {
 		}
 	}
 
-	//Ehdokas tablen toiminnot alkavat t�st�
+
+	//Ehdokas tablen toiminnot alkavat tästä
 	public ArrayList<Ehdokas> readAllEhdokas() {
 		ArrayList<Ehdokas> list=new ArrayList<>();
 		try {
@@ -123,7 +124,9 @@ public class Dao {
 			}
 		}
 		
-		//Kysymykset Tablen toiminnota alkavat t�st�
+
+		//Kysymykset Tablen toiminnota alkavat tästä
+
 		public ArrayList<Kysymys> readAllKysymykset() {
 			ArrayList<Kysymys> list=new ArrayList<>();
 			try {
@@ -324,7 +327,6 @@ public class Dao {
 				return null;
 			}
 		}
-
 		public Vastaukset insertVastaus(Vastaukset vastaus) {
 			try {
 				String sql="INSERT INTO vastaukset (KysymysID, EhdokasID, Vastasi, Perustelu) VALUES (?, ?, ?, ?);";
@@ -341,3 +343,4 @@ public class Dao {
 			return vastaus;
 		}
 }
+

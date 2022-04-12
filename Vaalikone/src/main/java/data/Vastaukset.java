@@ -1,3 +1,4 @@
+
 package data;
 
 public class Vastaukset {
@@ -63,4 +64,3 @@ public class Vastaukset {
 	}
 	
 }
-

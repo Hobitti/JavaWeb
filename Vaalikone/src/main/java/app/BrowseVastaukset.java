@@ -51,4 +51,3 @@ public class BrowseVastaukset extends HttpServlet {
 		rd.forward(request, response);
 	}
 }
-
