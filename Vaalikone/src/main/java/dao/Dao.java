@@ -47,7 +47,7 @@ public class Dao {
 		}
 	}
 
-	//Ehdokas tablen toiminnot alkavat t√§st√§
+	//Ehdokas tablen toiminnot alkavat t‰st‰
 	public ArrayList<Ehdokas> readAllEhdokas() {
 		ArrayList<Ehdokas> list=new ArrayList<>();
 		try {
@@ -123,7 +123,7 @@ public class Dao {
 			}
 		}
 		
-		//Kysymykset Tablen toiminnota alkavat t√§st√§
+		//Kysymykset Tablen toiminnota alkavat t‰st‰
 		public ArrayList<Kysymys> readAllKysymykset() {
 			ArrayList<Kysymys> list=new ArrayList<>();
 			try {

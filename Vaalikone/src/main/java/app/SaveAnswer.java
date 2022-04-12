@@ -32,7 +32,7 @@ public class SaveAnswer extends HttpServlet {
 	
 	@Override
 	public void init() {
-		dao = new Dao("jdbc:mysql://localhost:3306/javaweb", "root", "root");
+		dao = new Dao("jdbc:mysql://localhost:3306/javaweb", "root", "12345");
 	}
 
        
@@ -59,8 +59,10 @@ public class SaveAnswer extends HttpServlet {
         Map<Integer, Float> topEhdokkaatAvg = null;
         ArrayList<Ehdokas> topEhdokkaat = new ArrayList<Ehdokas>();
         
-        // käydään käyttäjän vastaukset läpi enumeraattorilla
-        // otetaan parametrien nimet formista saadusta POST-pyynnöstä
+
+        // kï¿½ydï¿½ï¿½n kï¿½yttï¿½jï¿½n vastaukset lï¿½pi enumeraattorilla
+        // otetaan parametrien nimet formista saadusta POST-pyynnï¿½stï¿½
+
         Enumeration<String> parameterNames = request.getParameterNames();
         
         while (parameterNames.hasMoreElements()) {
@@ -68,31 +70,33 @@ public class SaveAnswer extends HttpServlet {
         	// seuraava parametrin nimi muuttujaan
             String paramName = parameterNames.nextElement();
             
-            // nostetaan counttia, jotta tiedetään vastattujen kysymyksien määrä
+            // nostetaan counttia, jotta tiedetï¿½ï¿½n vastattujen kysymyksien mï¿½ï¿½rï¿½
             count++;
  
             // otetaan parametrin arvot parametrin nimen mukaan
             String[] paramValues = request.getParameterValues(paramName);
             
-            // käydään parametrin arvot läpi
+            // kï¿½ydï¿½ï¿½n parametrin arvot lï¿½pi
             for (int i = 0; i < paramValues.length; i++) {
             	
-            	// tämänhetkinen parametrin arvo muuttujaan
+            	// tï¿½mï¿½nhetkinen parametrin arvo muuttujaan
                 String paramValue = paramValues[i];
                 
-                // jos vastaus on neutraali, poistetaan tämä kierros countista
+                // jos vastaus on neutraali, poistetaan tï¿½mï¿½ kierros countista
                 if(Integer.parseInt(paramValue) == 0) {
                 	count--;
                 } 
                 
-                // jos parametrin arvo ei ole tyhjä, nostetaan arvojen yhteenlaskua
+                // jos parametrin arvo ei ole tyhjï¿½, nostetaan arvojen yhteenlaskua
                 if(paramValue != null) {
                 	total += Integer.parseInt(paramValue);
                 }
             }  
         }
+
         
         // jos ainakin yhteen kysymykseen on vastattu
+
         if(count != 0) {
         	
         	// lasketaan vastauksien arvojen keskiarvo
@@ -113,13 +117,14 @@ public class SaveAnswer extends HttpServlet {
                }
             }
             
-            // lisätään lista parametriin
+            // lisï¿½tï¿½ï¿½n lista parametriin
             request.setAttribute("top_ehdokkaat", topEhdokkaat);
             
         } else {
         	// kysymyksiin ei vastattu
         	request.setAttribute("top_ehdokkaat", null);
         }
+
         
         
 //        Debugging messages
@@ -131,7 +136,7 @@ public class SaveAnswer extends HttpServlet {
 //        response.getWriter().print("<br>");
 //        response.getWriter().print("Average: " + average);
 
-        // lähetetään tiedot parhaat_ehdokkaat.jsp:lle
+        // lï¿½hetetï¿½ï¿½n tiedot parhaat_ehdokkaat.jsp:lle
 		RequestDispatcher rd = request.getRequestDispatcher("/jsp/parhaat_ehdokkaat.jsp");
 		rd.forward(request, response);
         
