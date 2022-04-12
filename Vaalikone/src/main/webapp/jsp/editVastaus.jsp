@@ -26,14 +26,15 @@
   <div class="grid-left"></div>
   <div class="grid-item">
  <%
-	Vastaukset q = (Vastaukset)request.getAttribute("vastaus_list");
+	
+ 	Dao dao = (Dao)request.getAttribute("dao"); 
  	Kysymys k=(Kysymys)request.getAttribute("kysymys");
- 	
+ 	Vastaukset q = dao.readVastaus(request.getParameter("id"));
  	if(request.getParameter("Perustelu")!=null && request.getParameter("Vastaus")!=null){
  		
  		int vastasi=Integer.parseInt(request.getParameter("Vastaus"));
  		String perustelu = request.getParameter("Perustelu");
- 		Dao dao = (Dao)request.getAttribute("dao"); 
+ 		
  		
  		q.setVastasi(vastasi);
  		q.setPerustelu(perustelu);	
