@@ -81,4 +81,13 @@ font-size:0.80em;
 
 .ehdokas-card {
 	flex-basis: 400px;
+	background-color: #2196F3;
+	border: 1px solid rgba(0, 0, 0, 0.8);
+	border-radius: 20px;
+	text-align: center;
+}
+
+.link {
+	margin-top: 50px;
+	justify-content: center;
 }
