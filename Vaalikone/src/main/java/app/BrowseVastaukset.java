@@ -35,7 +35,7 @@ public class BrowseVastaukset extends HttpServlet {
 		ArrayList<Vastaukset> list = null;
 	
 		if (dao.getConnection()) {
-			list = dao.readEhdokasVastaukset("1");
+			list = dao.readEhdokasVastaukset("2");
 			System.out.println("Connection OK!");
 			if(list==null) System.out.println("saatana");
 		} else {
@@ -51,3 +51,4 @@ public class BrowseVastaukset extends HttpServlet {
 		rd.forward(request, response);
 	}
 }
+

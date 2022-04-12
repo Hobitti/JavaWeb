@@ -39,7 +39,7 @@ if(qList==null){
 for (int i = 0; qList != null && i < qList.size(); i++) {
 	Vastaukset q = qList.get(i);
 	out.println("<h2>" + q.getId() + " <span>"+ q.getPerustelu() +"</span></h2>");		
-	out.println("<p> <a href='./editVastau?id="+q.getId() +"' >Muokkaa kysymystä</a> <br>");
+	out.println("<p> <a href='./editVastaus?id="+q.getId() +"' >Muokkaa kysymystä</a> <br>");
 	out.println("<a href='./vastaukset?id="+q.getId() +"&mode=1' onclick='window.confirm()'>Poista kysymyksiä</a></p> ");
 
   
