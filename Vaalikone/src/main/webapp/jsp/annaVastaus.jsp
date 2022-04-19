@@ -71,7 +71,7 @@
 		    
 		    out.println("<br>");
 		    		
-		   	out.println("<textarea name='Perustelu' rows='4' cols='20' Required >"+q.getPerustelu()+"</textarea >");
+		   	out.println("<textarea name='Perustelu' rows='4' cols='20' Required >"+"</textarea >");
 		   	
 		   	out.println("<br>");
 		   	
