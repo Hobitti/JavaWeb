@@ -7,8 +7,7 @@ public class Ehdokas {
 	private String slogan;
 	private int puolue;
 	private String kuvaus;
-	
-	
+
 	public Ehdokas(int id, String nimi, int kunta, String slogan, int puolue, String kuvaus) {
 		super();
 		this.id = id;

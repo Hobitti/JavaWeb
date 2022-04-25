@@ -10,25 +10,29 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import dao.Dao;
+import data.Vastaukset;
 import data.Kysymys;
 
-
-
-@WebServlet("/kysymykset")
-public class ReadKysymys extends HttpServlet {
+/**
+ * @author akseli
+ * 
+ *N‰ytt‰‰ ja muokaa ehdokkaan vastausta
+ *
+ */
+@WebServlet("/editVastaus")
+public class EditVastaus extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private Dao dao = null;
 
 	@Override
 	public void init() {
-
 		dao = new Dao("jdbc:mysql://localhost:3306/javaweb", "root", "12345");
 	}
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public ReadKysymys() {
+	public EditVastaus() {
 		super();
 	}
 
@@ -36,25 +40,25 @@ public class ReadKysymys extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-
-	
-	@Override
-
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ArrayList<Kysymys> list = null;
+		Vastaukset list = null;
+		Kysymys kys=null;
+		Integer.parseInt("23");
 		
 		if (dao.getConnection()) {
-			list = dao.readAllKysymykset();
+			list = dao.readVastaus("2");
+			kys=dao.readKysymys(list.getKysymysId()+"");
 			System.out.println("Connection OK!");
-
+			
 		} else {
 			System.out.println("No connection to database");
 		}
 		
-		request.setAttribute("kysymys_list", list);
+		request.setAttribute("vastaus_list", list);
+		request.setAttribute("kysymys", kys);
+		request.setAttribute("dao", dao);
 
-		RequestDispatcher rd = request.getRequestDispatcher("/jsp/kysymykset.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/jsp/editVastaus.jsp");
 		rd.forward(request, response);
 	}
 }
-
