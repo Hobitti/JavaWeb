@@ -22,7 +22,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class SaveAnswer
+ * Date: 25.4.2022
+ * Servlet implementation class SaveAnswer.java. Gets question answers from form as POST and returns best candidates. 
+ * @author nuutti
+ * @version 1.0
  */
 @WebServlet("/SaveAnswer")
 public class SaveAnswer extends HttpServlet {
