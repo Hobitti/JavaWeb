@@ -12,7 +12,12 @@ import javax.servlet.http.HttpServletResponse;
 import dao.Dao;
 import data.Kysymys;
 
-
+/**
+ * Date: 25.4.2022
+ * Servlet implementation class ReadKysymys.java. Reads all the questions from the database and forwards them
+ * @author nuutti
+ * @version 1.0
+ */
 
 @WebServlet("/kysymykset")
 public class ReadKysymys extends HttpServlet {
